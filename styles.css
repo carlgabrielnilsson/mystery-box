@@ -1,0 +1,276 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+:root {
+    --glow: rgba(255, 195, 26, 0.4);
+    --cube-size: min(40vw, 400px); /* Even larger for better readability */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: white; /* Changed to white background */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+/* Gift container and message styling */
+.gift-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.gift-message {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.gift-message h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.gift-message p {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: #666;
+    margin: 0;
+    font-style: italic;
+    font-family: 'Arial', sans-serif;
+}
+
+.hexagon {
+    z-index: -2;
+    position: relative;
+    width: calc(var(--cube-size) * 0.8);
+    height: calc(var(--cube-size) * 0.46);
+    background-color: var(--glow);
+    margin: calc(var(--cube-size) * 0.23) 0;
+    filter: blur(20px);
+}
+
+.hexagon:before,
+.hexagon:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: calc(var(--cube-size) * 0.4) solid transparent;
+    border-right: calc(var(--cube-size) * 0.4) solid transparent;
+}
+
+.hexagon:before {
+    bottom: 100%;
+    border-bottom: calc(var(--cube-size) * 0.23) solid var(--glow);
+}
+
+.hexagon:after {
+    top: 100%;
+    width: 0;
+    border-top: calc(var(--cube-size) * 0.23) solid var(--glow);
+}
+
+.back {
+    background-image: url("https://res.cloudinary.com/dbrwtwlwl/image/upload/v1580369339/cube/mysteryBoxBackground_2x_b2espr.png");
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+
+.top {
+    background-image: url("https://res.cloudinary.com/dbrwtwlwl/image/upload/v1580369339/cube/mysteryBoxTopFlap_2x_f9cb8g.png");
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.left {
+    background-image: url("https://res.cloudinary.com/dbrwtwlwl/image/upload/v1580369339/cube/mysteryBoxLeftFlap_2x_y8u4gz.png");
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.right {
+    background-image: url("https://res.cloudinary.com/dbrwtwlwl/image/upload/v1580369339/cube/mysteryBoxRightFlap_2x_abexhh.png");
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+#cube {
+    animation: hover 1.5s ease-in-out infinite alternate;
+    transition: transform 300ms;
+    animation-play-state: running;
+    width: var(--cube-size) !important;
+    height: var(--cube-size) !important;
+}
+
+@keyframes hover {
+    from {
+        transform: translateY(-0.5rem);
+    }
+    to {
+        transform: translateY(0.5rem);
+    }
+}
+
+.powerup {
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    z-index: 100;
+    overflow: hidden;
+    height: calc(var(--cube-size) * 0.8); /* Increased from 0.6 to 0.8 for bigger image */
+    width: calc(var(--cube-size) * 0.8);   /* Increased from 0.6 to 0.8 for bigger image */
+    opacity: 0;
+    transition: all 750ms;
+    box-shadow: 0 0 40px rgba(255, 0, 0, 1), 0 0 80px rgba(255, 0, 0, 0.5); /* Enhanced glow */
+    /* Add proper centering */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Cube parts responsive sizing */
+.cube {
+    width: var(--cube-size) !important;
+    height: var(--cube-size) !important;
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 768px) {
+    :root {
+        --cube-size: min(60vw, 300px); /* Bigger on tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --cube-size: min(70vw, 250px); /* Bigger on phones */
+    }
+}
+
+/* Confetti animation styles - exploding from center */
+.confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #ff0040;
+    border-radius: 50%;
+    animation: confetti-explode 2s ease-out forwards;
+}
+
+.confetti-piece:nth-child(odd) {
+    background: #ffaa00;
+    width: 10px;
+    height: 10px;
+}
+
+.confetti-piece:nth-child(3n) {
+    background: #00ff40;
+    width: 6px;
+    height: 6px;
+}
+
+.confetti-piece:nth-child(4n) {
+    background: #0040ff;
+    width: 12px;
+    height: 4px;
+    border-radius: 2px;
+}
+
+.confetti-piece:nth-child(5n) {
+    background: #ff4000;
+    width: 4px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.confetti-piece:nth-child(6n) {
+    background: #ff00ff;
+    width: 8px;
+    height: 8px;
+}
+
+@keyframes confetti-explode {
+    0% {
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    10% {
+        transform: translate(0, 0) scale(1) rotate(45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) scale(0.3) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Tension building animations - faster and with spinning */
+@keyframes side-kick-left {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(-20px) rotate(-5deg); } /* Added rotation */
+}
+
+@keyframes side-kick-right {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(20px) rotate(5deg); } /* Added rotation */
+}
+
+@keyframes side-kick-top {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(-3deg); } /* Added rotation */
+}
+
+@keyframes glow-buildup {
+    0% {
+        filter: blur(20px);
+        opacity: 0.5;
+    }
+    100% {
+        filter: blur(25px);
+        opacity: 0.8;
+    }
+}
+
+/* Animation classes to apply - much faster durations */
+.side-kick-left {
+    animation: side-kick-left 0.1s ease-in-out; /* Reduced from 0.2s */
+}
+
+.side-kick-right {
+    animation: side-kick-right 0.1s ease-in-out; /* Reduced from 0.2s */
+}
+
+.side-kick-top {
+    animation: side-kick-top 0.1s ease-in-out; /* Reduced from 0.2s */
+}
+
+.glow-buildup {
+    animation: glow-buildup 0.6s ease-out forwards;
+}
